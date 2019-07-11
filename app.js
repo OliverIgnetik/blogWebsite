@@ -40,6 +40,19 @@ app.get('/contact', (req, res) => {
   });
 });
 
+// get and render contact page
+
+app.get('/compose', (req, res) => {
+  res.render('compose');
+});
+
+// post publishes 
+
+app.post('/', (req, res) => {
+  let postSubmit = req.body.postSubmit;
+  console.log(postSubmit);
+});
+
 // listen for server
 
 app.listen(3000, () => {  
