@@ -1,5 +1,6 @@
 //jshint esversion:6
 
+// set up packages 
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -15,11 +16,31 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+// get and render the home page
 
 app.get('/', (req, res) => {
-  res.write(homeStartingContent);
-  res.send();
+  res.render('home', {
+    homeStartingContent:homeStartingContent,
+  });
 });
+
+// get and render about page
+
+app.get('/about', (req, res) => {
+  res.render('about', {
+    aboutContent:aboutContent,
+  });
+});
+
+// get and render contact page
+
+app.get('/contact', (req, res) => {
+  res.render('contact', {
+    contactContent:contactContent,
+  });
+});
+
+// listen for server
 
 app.listen(3000, () => {  
   console.log('Server started on 3000');
