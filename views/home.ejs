@@ -1,5 +1,18 @@
 <%- include('partials/header'); -%>
 <h1>Home</h1>
-<%= homeStartingContent %> 
+<br>
+<p>
+    <%= homeStartingContent %>
+</p>
+<% posts.forEach(post => { %>
+ <h1>
+     <%= post.postTitle %>
+ </h1>
+ <br>
+ <p>
+     <%= post.postContent.substr(0,70) %>  
+     <span style = 'Font-weight:bold;'>...</span> 
+        <a class = 'ml-1' href="/posts/<%= post.postTitle %>" >Read More</a>
+ </p>
+<% }) %>
 <%- include('partials/footer'); -%>
-

@@ -3,6 +3,7 @@
 // set up packages 
 const express = require("express");
 const bodyParser = require("body-parser");
+const _ = require('lodash');
 const ejs = require("ejs");
 
 const homeStartingContent = "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
@@ -13,22 +14,30 @@ const app = express();
 
 app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(express.static("public"));
+
+// global variables 
+const posts = [];
 
 // get and render the home page
 
 app.get('/', (req, res) => {
   res.render('home', {
-    homeStartingContent:homeStartingContent,
+    homeStartingContent: homeStartingContent,
+    posts: posts,
   });
+  console.log(posts);
+
 });
 
 // get and render about page
 
 app.get('/about', (req, res) => {
   res.render('about', {
-    aboutContent:aboutContent,
+    aboutContent: aboutContent,
   });
 });
 
@@ -36,25 +45,46 @@ app.get('/about', (req, res) => {
 
 app.get('/contact', (req, res) => {
   res.render('contact', {
-    contactContent:contactContent,
+    contactContent: contactContent,
   });
 });
 
-// get and render contact page
+// get and render compose page
 
 app.get('/compose', (req, res) => {
   res.render('compose');
 });
 
-// post publishes 
+// get individual posts 
 
-app.post('/', (req, res) => {
-  let postSubmit = req.body.postSubmit;
-  console.log(postSubmit);
+app.get('/posts/:postTitle', function (req, res) {
+  const postTitle = req.params.postTitle;
+  // check for the matching post
+
+  posts.forEach(post => {
+    if (_.lowerCase(postTitle) === _.lowerCase(post.postTitle)) {
+      res.render('post', {
+        post:post
+      });
+    }
+  });
+});
+
+// post with compose route
+
+app.post('/compose', (req, res) => {
+  let postTitle = req.body.postTitle;
+  let postContent = req.body.postContent;
+  const post = {
+    postTitle: postTitle,
+    postContent: postContent
+  };
+  posts.push(post);
+  res.redirect('/');
 });
 
 // listen for server
 
-app.listen(3000, () => {  
+app.listen(3000, () => {
   console.log('Server started on 3000');
 });
