@@ -19,24 +19,54 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
 app.use(express.static("public"));
 
-// require mongoose 
+// set up mongoose connection
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
 // Connect MongoDB at default port 27017.
-mongoose.connect('mongodb+srv://oliver:tritone_1992@ignetikcluster-00dei.mongodb.net/toDoListDB', {
-  useNewUrlParser: true,
-  useCreateIndex: true,
+mongoose.connect('mongodb://localhost:27017/blogDB', {
+    useNewUrlParser: true,
+    useCreateIndex: true,
 }, (err) => {
-  if (!err) {
-    console.log('MongoDB Connection Succeeded.')
-  } else {
-    console.log('Error in DB connection: ' + err)
-  }
+    if (!err) {
+        console.log('MongoDB Connection Succeeded.')
+    } else {
+        console.log('Error in DB connection: ' + err)
+    }
 });
+
+// mongoDB ATLAS deployment
+
+// // require mongoose 
+// const mongoose = require('mongoose');
+
+// mongoose.Promise = global.Promise;
+
+// // Connect MongoDB at default port 27017.
+// mongoose.connect('mongodb+srv://oliver:tritone_1992@ignetikcluster-00dei.mongodb.net/toDoListDB', {
+//   useNewUrlParser: true,
+//   useCreateIndex: true,
+// }, (err) => {
+//   if (!err) {
+//     console.log('MongoDB Connection Succeeded.')
+//   } else {
+//     console.log('Error in DB connection: ' + err)
+//   }
+// });
+
+// Declare the schema for blogposts 
+
+const blogSchema = new mongoose.Schema({
+  title: String, 
+  content: String
+});
+
+// new collection of Blogs 
+const Blog = mongoose.model("Blog",blogSchema);
 
 // global variables 
 const posts = [];
@@ -94,6 +124,21 @@ app.get('/posts/:postTitle', function (req, res) {
 app.post('/compose', (req, res) => {
   let postTitle = req.body.postTitle;
   let postContent = req.body.postContent;
+
+  // add the post to the Blogs collection 
+
+  const blog = new Blog({
+    title:postTitle,
+    content:postContent
+  });
+
+  // insert blog into blogDB object 
+  Blog.insertMany(
+      blog,(err)=>{
+        console.log(err);
+      }
+  );
+
   const post = {
     postTitle: postTitle,
     postContent: postContent
