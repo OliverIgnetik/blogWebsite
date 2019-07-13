@@ -4,15 +4,16 @@
 <p>
     <%= homeStartingContent %>
 </p>
+
 <% posts.forEach(post => { %>
  <h1>
-     <%= post.postTitle %>
+     <%= post.title %>
  </h1>
  <br>
  <p>
-     <%= post.postContent.substr(0,70) %>  
+     <%= post.content.substr(0,70) %>  
      <span style = 'Font-weight:bold;'>...</span> 
-        <a class = 'ml-1' href="/posts/<%= post.postTitle %>" >Read More</a>
+        <a class = 'ml-1' href="/posts/<%= post.title %>" >Read More</a>
  </p>
 <% }) %>
 <%- include('partials/footer'); -%>

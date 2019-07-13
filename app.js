@@ -69,16 +69,24 @@ const blogSchema = new mongoose.Schema({
 const Blog = mongoose.model("Blog",blogSchema);
 
 // global variables 
-const posts = [];
+// const posts = [];
 
 // get and render the home page
 
 app.get('/', (req, res) => {
-  res.render('home', {
-    homeStartingContent: homeStartingContent,
-    posts: posts,
+  Blog.find({ 
+  }, (err, posts) => {
+     if(err){
+         console.log(`Error: ` + err)
+     } else{
+        res.render('home', {
+          homeStartingContent: homeStartingContent,
+          posts: posts,
+        });
+        console.log(posts);
+     }
   });
-  console.log(posts);
+  
 });
 
 // get and render about page
@@ -134,11 +142,14 @@ app.post('/compose', (req, res) => {
   // insert blog into blogDB object 
   blog.save();
   
+  // blog object for posts array 
   const post = {
     postTitle: postTitle,
     postContent: postContent
   };
+
   posts.push(post);
+
   res.redirect('/');
 });
 
