@@ -79,7 +79,6 @@ app.get('/', (req, res) => {
     posts: posts,
   });
   console.log(posts);
-
 });
 
 // get and render about page
@@ -133,12 +132,8 @@ app.post('/compose', (req, res) => {
   });
 
   // insert blog into blogDB object 
-  Blog.insertMany(
-      blog,(err)=>{
-        console.log(err);
-      }
-  );
-
+  blog.save();
+  
   const post = {
     postTitle: postTitle,
     postContent: postContent
