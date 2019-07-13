@@ -13,7 +13,7 @@ What's on your mind today ?
  <p>
      <%= post.content.substr(0,70) %>  
      <span style = 'Font-weight:bold;'>...</span> 
-        <a class = 'ml-1' href="/posts/<%= post.title %>" >Read More</a>
+        <a class = 'ml-1' href="/posts/<%= post._id %>" name=>Read More</a>
  </p>
 <% }) %>
 <%- include('partials/footer'); -%>
