@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static("public"));
 
+// LOCAL CONNECTION
 // // set up mongoose connection
 // const mongoose = require('mongoose');
 
