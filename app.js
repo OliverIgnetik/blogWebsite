@@ -21,41 +21,41 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static("public"));
 
-// set up mongoose connection
-const mongoose = require('mongoose');
-
-mongoose.Promise = global.Promise;
-
-// Connect MongoDB at default port 27017.
-mongoose.connect('mongodb://localhost:27017/blogDB', {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-}, (err) => {
-    if (!err) {
-        console.log('MongoDB Connection Succeeded.')
-    } else {
-        console.log('Error in DB connection: ' + err)
-    }
-});
-
-// mongoDB ATLAS deployment
-
-// // require mongoose 
+// // set up mongoose connection
 // const mongoose = require('mongoose');
 
 // mongoose.Promise = global.Promise;
 
 // // Connect MongoDB at default port 27017.
-// mongoose.connect('mongodb+srv://oliver:tritone_1992@ignetikcluster-00dei.mongodb.net/toDoListDB', {
-//   useNewUrlParser: true,
-//   useCreateIndex: true,
+// mongoose.connect('mongodb://localhost:27017/blogDB', {
+//     useNewUrlParser: true,
+//     useCreateIndex: true,
 // }, (err) => {
-//   if (!err) {
-//     console.log('MongoDB Connection Succeeded.')
-//   } else {
-//     console.log('Error in DB connection: ' + err)
-//   }
+//     if (!err) {
+//         console.log('MongoDB Connection Succeeded.')
+//     } else {
+//         console.log('Error in DB connection: ' + err)
+//     }
 // });
+
+// mongoDB ATLAS deployment
+
+// require mongoose 
+const mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
+
+// Connect MongoDB at default port 27017.
+mongoose.connect('mongodb+srv://oliver:tritone_1992@ignetikcluster-00dei.mongodb.net/blogDB', {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+}, (err) => {
+  if (!err) {
+    console.log('MongoDB Connection Succeeded.')
+  } else {
+    console.log('Error in DB connection: ' + err)
+  }
+});
 
 // Declare the schema for blogposts 
 
@@ -146,6 +146,11 @@ app.post('/compose', (req, res) => {
 
 // listen for server
 
-app.listen(3000, () => {
-  console.log('Server started on 3000');
+let port = process.env.PORT;
+if(port==null||port==''){
+  port=3000;
+}
+
+app.listen(port, function () {
+  console.log("Server started!");
 });
