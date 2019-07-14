@@ -47,8 +47,8 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 // Connect MongoDB
-// mongoose.connect(process.env.MONGODB_ATLAS, {
-mongoose.connect('mongodb+srv://oliver:tritone_1992@ignetikcluster-00dei.mongodb.net/blogDB', {
+mongoose.connect(process.env.MONGODB_ATLAS, {
+// mongoose.connect('mongodb+srv://oliver:tritone_1992@ignetikcluster-00dei.mongodb.net/blogDB', {
   useNewUrlParser: true,
   useCreateIndex: true,
 }, (err) => {
