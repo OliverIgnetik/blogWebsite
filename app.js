@@ -1,5 +1,5 @@
 //jshint esversion:6
-
+require('dotenv').config();
 // set up packages 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -46,8 +46,9 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-// Connect MongoDB at default port 27017.
-mongoose.connect('mongodb+srv://oliver:tritone_1992@ignetikcluster-00dei.mongodb.net/blogDB', {
+// Connect MongoDB
+mongoose.connect(process.env.MONGODB_ATLAS, {
+// mongoose.connect('mongodb+srv://oliver:tritone_1992@ignetikcluster-00dei.mongodb.net/blogDB', {
   useNewUrlParser: true,
   useCreateIndex: true,
 }, (err) => {
