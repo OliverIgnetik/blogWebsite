@@ -69,7 +69,6 @@ const blogSchema = new mongoose.Schema({
 const Blog = mongoose.model("Blog", blogSchema);
 
 // get and render the home page
-
 app.get('/', (req, res) => {
   Blog.find({}, (err, posts) => {
     if (err) {
@@ -78,7 +77,6 @@ app.get('/', (req, res) => {
       res.render('home', {
         posts: posts,
       });
-      console.log(posts);
     }
   });
 
