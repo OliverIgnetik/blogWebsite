@@ -61,28 +61,27 @@ mongoose.connect(process.env.MONGODB_ATLAS, {
 // Declare the schema for blogposts 
 
 const blogSchema = new mongoose.Schema({
-  title: String, 
+  title: String,
   content: String
 });
 
 // new collection of Blogs 
-const Blog = mongoose.model("Blog",blogSchema);
+const Blog = mongoose.model("Blog", blogSchema);
 
 // get and render the home page
 
 app.get('/', (req, res) => {
-  Blog.find({ 
-  }, (err, posts) => {
-     if(err){
-         console.log(`Error: ` + err)
-     } else{
-        res.render('home', {
-          posts: posts,
-        });
-        console.log(posts);
-     }
+  Blog.find({}, (err, posts) => {
+    if (err) {
+      console.log(`Error: ` + err)
+    } else {
+      res.render('home', {
+        posts: posts,
+      });
+      console.log(posts);
+    }
   });
-  
+
 });
 
 // get and render about page
@@ -111,17 +110,17 @@ app.get('/compose', (req, res) => {
 
 app.get('/posts/:id', function (req, res) {
   const id = req.params.id;
-  
+
   // check through the blogs by id
-  Blog.findById( id, (err, post) => {
-     if(err){
-         console.log(`Error: ` + err)
-     } else{
+  Blog.findById(id, (err, post) => {
+    if (err) {
+      console.log(`Error: ` + err)
+    } else {
       //  render post
-        res.render('post', {
-          post: post,
-        });
-     }
+      res.render('post', {
+        post: post,
+      });
+    }
   });
 });
 
@@ -134,8 +133,8 @@ app.post('/compose', (req, res) => {
   // add the post to the Blogs collection 
 
   const blog = new Blog({
-    title:postTitle,
-    content:postContent
+    title: postTitle,
+    content: postContent
   });
 
   // insert blog into blogDB object 
@@ -148,8 +147,8 @@ app.post('/compose', (req, res) => {
 // listen for server
 
 let port = process.env.PORT;
-if(port==null||port==''){
-  port=3000;
+if (port == null || port == '') {
+  port = 3000;
 }
 
 app.listen(port, function () {
